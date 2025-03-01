@@ -37,7 +37,25 @@ public class DList implements List {
     
     
     public Element search(int key){
-            return null;
         
+        Node currentNode = head;
+        
+        while(currentNode.getNext() != null){  // if getNext == null that means that currentNode is the tail
+            
+            if(currentNode.getkey() == key){
+                return currentNode;
+            }
+            else{
+                currentNode = currentNode.getNext();
+                if(currentNode.getNext() == null){
+                    if(currentNode.getkey() == key){
+                        return currentNode; 
+                    }
+                }
+            }
+            
+        }
+        return null;
+              
     }
 }

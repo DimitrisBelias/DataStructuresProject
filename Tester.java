@@ -9,5 +9,9 @@ public class Tester {
         System.out.println(list.insert(15, "c!"));
         System.out.println(list);
 
+
+        Node result;
+        result = (Node) list.search(5);
+        System.out.println(result);
     }
 }
