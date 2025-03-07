@@ -15,8 +15,8 @@ public class DList implements List {
 
     public boolean insert(int key, String data){
         
-
-        Node node = new Node(key, data);
+        Element element = new ElementData(key, data);
+        Node node = new Node(element);
 
 
         if(head == null){
@@ -34,9 +34,9 @@ public class DList implements List {
     
     public boolean delete(int key){
 
-        if( head.getkey()==key ){
+        if(head.getElement().getkey()==key){
             
-            head = head.getNext();
+            head = head.getNext();   // Garbage Collector will delete the head since there is no reference
             return true;
 
         }else{
@@ -44,8 +44,8 @@ public class DList implements List {
             Node currentNode = head;
             while(currentNode.getNext()!=null){
 
-                if(currentNode.getNext().getkey() == key){
-                    currentNode.setNext(currentNode.getNext().getNext());
+                if(currentNode.getNext().getElement().getkey() == key){
+                    currentNode.setNext(currentNode.getNext().getNext());  // Since there is no previous node variable we use getNext().getNext()
                     return true;
                 }
 
@@ -64,14 +64,14 @@ public class DList implements List {
         
         while(currentNode.getNext() != null){  // if getNext == null that means that currentNode is the tail
             
-            if(currentNode.getkey() == key){
-                return currentNode;
+            if(currentNode.getElement().getkey() == key){
+                return currentNode.getElement();
             }
             else{
                 currentNode = currentNode.getNext();
                 if(currentNode.getNext() == null){
-                    if(currentNode.getkey() == key){
-                        return currentNode; 
+                    if(currentNode.getElement().getkey() == key){
+                        return currentNode.getElement(); 
                     }
                 }
             }

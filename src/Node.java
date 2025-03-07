@@ -1,33 +1,28 @@
 package src;
-public class Node implements Element {
+
+public class Node {
     
-    private int key;
-    private String stringData;
+    private Element element;
     private Node next;
 
 
     
-    public Node(int key, String stringData){
-        this.key = key;
-        this.stringData = stringData;
+    protected Node(Element element){
+        this.element = element;
         this.next = null;
 
     }
 
-
-    public int getkey(){
-        return key;
+    protected Element getElement(){
+        return element;
     }
 
-    public String getData(){
-        return stringData;
-    }
 
-    public Node getNext(){
+    protected Node getNext(){
         return next;
     }
 
-    public void setNext(Node next){
+    protected void setNext(Node next){
         this.next = next;
     }
 
