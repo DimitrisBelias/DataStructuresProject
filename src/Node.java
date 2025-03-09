@@ -2,18 +2,18 @@ package src;
 
 public class Node {
     
-    private Element element;
+    private ElementData element;
     private Node next;
 
 
     
-    protected Node(Element element){
+    protected Node(ElementData element){
         this.element = element;
         this.next = null;
 
     }
 
-    protected Element getElement(){
+    protected ElementData getElement(){
         return element;
     }
 

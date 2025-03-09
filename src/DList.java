@@ -8,14 +8,14 @@ public class DList implements List {
     private Node head;
     private Node tail;
 
-    public DList(){
+    protected DList(){
         this.head = null;
         this.tail = null;
     }
 
     public boolean insert(int key, String data){
         
-        Element element = new ElementData(key, data);
+        ElementData element = new ElementData(key, data);
         Node node = new Node(element);
 
 

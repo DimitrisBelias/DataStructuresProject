@@ -5,7 +5,7 @@ public class ElementData implements Element {
     private int key;
     private String data;
 
-    public ElementData(int key, String data){
+    protected ElementData(int key, String data){
         this.key = key;
         this.data = data;
     }
@@ -20,5 +20,6 @@ public class ElementData implements Element {
     public String getData() {
         return data;
     }
+    
     
 }
