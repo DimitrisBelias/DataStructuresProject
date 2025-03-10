@@ -21,6 +21,8 @@ public class TesterPool {
         System.out.println(dlistpool.delete(1));
         System.out.println(dlistpool.delete(5));
 
+        dlistpool.insert(4, "test_get_object");
+
   
 
 
