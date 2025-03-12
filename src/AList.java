@@ -2,22 +2,64 @@ package src;
 
 public class AList implements List{
     int tail, capacity;
-    ElementData[] data;
+    Element[] dataArray;
 
     protected AList(int capacity){
         this.tail=0;
         this.capacity = capacity;
-        this.data = null;
+        this.dataArray = new ElementData[capacity];
     }
 
     @Override
     public boolean insert(int key, String data) {
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        
+        if(capacity == tail){
+            System.out.println("Array is full, can not add element");
+            return false;
+        }
+        else{
+            Element element = new ElementData(key, data);
+
+            for (int i = 0; i < tail; i++) {
+                
+                if(dataArray[i].getkey() > key){
+                    
+                    for (int j = tail; j > i; j--) {
+                        dataArray[j] = dataArray[j-1];
+                    }
+                    
+
+                    dataArray[i] = element;
+                    tail++;
+                    return true;
+                }
+            }
+
+            dataArray[tail] = element;
+            tail++;
+            return true;
+        }
     }
 
     @Override
     public boolean delete(int key) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+
+        int result = BinarySearch(key);
+
+        if(result == -1){
+            System.out.println("Target key is not in the AList");
+            return false;
+        }
+        else{
+            for (int i = result; i < tail - 1; i++) {
+                dataArray[i] = dataArray[i+1];
+            }
+
+            dataArray[tail - 1] = null;
+            tail--;
+            return true;
+        }
+
     }
 
     @Override
@@ -30,7 +72,7 @@ public class AList implements List{
             return null;
         }
         else{
-            return data[result];
+            return dataArray[result];
         }
     }
 
@@ -39,14 +81,17 @@ public class AList implements List{
         int high = tail - 1;
         int low = 0;
 
-        int mid = low + (high - low)/2;
 
         while(low <= high){
-            if(data[mid].getkey()==key){
+
+            int mid = low + (high - low)/2;
+
+
+            if(dataArray[mid].getkey()==key){
                 return mid;
             }
 
-            if(data[mid].getkey() > key){
+            if(dataArray[mid].getkey() > key){
                 high = mid - 1;
             }
             else{

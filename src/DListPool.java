@@ -26,7 +26,7 @@ public class DListPool extends DList {
             }
         }
         else{
-            ElementData element = new ElementData(key, data);
+            Element element = new ElementData(key, data);
             Node node = new Node(element);
 
             if(head == null){

@@ -1,6 +1,6 @@
 package src;
 
-public class LinkedListPool implements ObjectPool<ElementData> {
+public class LinkedListPool implements ObjectPool<Element> {
     
     Node head;
     Node tail;
@@ -13,7 +13,7 @@ public class LinkedListPool implements ObjectPool<ElementData> {
     }
 
     @Override
-    public void addObject(ElementData element){ 
+    public void addObject(Element element){ 
         
         
         Node node = new Node(element);
@@ -34,7 +34,7 @@ public class LinkedListPool implements ObjectPool<ElementData> {
     }
 
     @Override
-    public ElementData getObject(){
+    public Element getObject(){
         Node returnNode = head;
         if(hasFreeObject()){
             head = head.getNext();            
