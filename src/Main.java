@@ -1,7 +1,7 @@
 package src;
 
-import java.security.SecureRandom;
 import java.util.Random;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -11,17 +11,6 @@ public class Main {
     private static final int INSERT_OPERATIONS = 1;
     private static final int DELETE_OPERATIONS = 2;
 
-    // Define 
-    private static final int SIZES = 11;
-    private static final int CALCULATIONS = 8;
-
-
-    // Store result for each dataStructure
-    double[][] DList_Results = new double[SIZES][CALCULATIONS];
-    double[][] DListPool_Results = new double[SIZES][CALCULATIONS];
-    double[][] AList_Results = new double[SIZES][CALCULATIONS];
-    double[][] AListPool_Results = new double[SIZES][CALCULATIONS];
-    
 
     
     public static void main(String[] args) {
@@ -29,11 +18,82 @@ public class Main {
         PrepareLists prepareLists = new PrepareLists();
 
         prepareLists.AddData();
-        
-        int[] sizesTest = {30, 50, 100, 200, 500, 1000, 5000, 10000, 50000, 100000};
+
+            
+        int[] sizesTest = {30, 50, 100, 200, 500, 800, 1000, 5000, 10000, 50000, 100000};
+
+        TestDataCollector CollectorDList = new TestDataCollector(
+            Arrays.asList(
+                    "N",
+                        "Α μ.ο πράξεων ανά αναζήτηση",
+                        "Β μ.ο πράξεων ανά εισαγωγή",
+                        "C μ.ο πράξεων ανά διαγραφή",
+                        "D μ.ο πράξεων ανά εισαγωγή 2",
+                        "A μ.ο χρόνου ανά αναζήτηση",
+                        "B μ.ο χρόνου ανά εισαγωγή 1",
+                        "C μ.ο χρόνου ανά διαγραφή",
+                        "D μ.ο χρόνου ανά εισαγωγή"
+
+            )   
+        );
+
+        TestDataCollector CollectorAList = new TestDataCollector(
+            Arrays.asList(
+                    "N",
+                        "Α μ.ο πράξεων ανά αναζήτηση",
+                        "Β μ.ο πράξεων ανά εισαγωγή",
+                        "C μ.ο πράξεων ανά διαγραφή",
+                        "D μ.ο πράξεων ανά εισαγωγή 2",
+                        "A μ.ο χρόνου ανά αναζήτηση",
+                        "B μ.ο χρόνου ανά εισαγωγή 1",
+                        "C μ.ο χρόνου ανά διαγραφή",
+                        "D μ.ο χρόνου ανά εισαγωγή"
+
+            )   
+        );
+
+
+        TestDataCollector CollectorDListPool = new TestDataCollector(
+            Arrays.asList(
+                    "N",
+                        "Α μ.ο πράξεων ανά αναζήτηση",
+                        "Β μ.ο πράξεων ανά εισαγωγή",
+                        "C μ.ο πράξεων ανά διαγραφή",
+                        "D μ.ο πράξεων ανά εισαγωγή 2",
+                        "A μ.ο χρόνου ανά αναζήτηση",
+                        "B μ.ο χρόνου ανά εισαγωγή 1",
+                        "C μ.ο χρόνου ανά διαγραφή",
+                        "D μ.ο χρόνου ανά εισαγωγή"
+
+            )   
+        );
+
+
+        TestDataCollector CollectorAListPool = new TestDataCollector(
+            Arrays.asList(
+                    "N",
+                        "Α μ.ο πράξεων ανά αναζήτηση",
+                        "Β μ.ο πράξεων ανά εισαγωγή",
+                        "C μ.ο πράξεων ανά διαγραφή",
+                        "D μ.ο πράξεων ανά εισαγωγή 2",
+                        "A μ.ο χρόνου ανά αναζήτηση",
+                        "B μ.ο χρόνου ανά εισαγωγή 1",
+                        "C μ.ο χρόνου ανά διαγραφή",
+                        "D μ.ο χρόνου ανά εισαγωγή"
+
+            )   
+        );
+
+
+ 
+
+
+
+   
 
         for (int size : sizesTest) {
             
+
             String sizeName = String.valueOf(size);
             DList dlist = prepareLists.getDList("dlist_" + sizeName);
             AList alist = prepareLists.getAList("alist_" + sizeName);
@@ -50,24 +110,46 @@ public class Main {
                 k = 100;
             }
 
-            MultiCounter dlistCounter = new MultiCounter();
+            MultiCounter dlistCounter = new MultiCounter(3);
+            MultiCounter alistCounter = new MultiCounter(3);
+            MultiCounter alistPoolCounter = new MultiCounter(3);
+            MultiCounter dlistPoolCounter = new MultiCounter(3);
 
+            dlist.setCounter(dlistCounter);
+            alist.setCounter(alistCounter);
+            alistPool.setCounter(alistPoolCounter);
+            dlistPool.setCounter(dlistPoolCounter);
 
-
-
-
-
-
+            runExperiment(size, dlist, k, dlistCounter, CollectorDList);
+            runExperiment(size, dlistPool, k, dlistPoolCounter, CollectorDListPool);
+            runExperiment(size, alist, k, alistCounter, CollectorAList);
+            runExperiment(size, alistPool, k, alistPoolCounter, CollectorAListPool);
+            
 
 
         }
 
+        CollectorDList.toScreen();
+        CollectorDList.toFile("DList_Metrics.csv");
 
+        CollectorDListPool.toScreen();
+        CollectorDListPool.toFile("DListPool_Metrics.csv");
+
+        CollectorAList.toScreen();
+        CollectorAList.toFile("AList_Metrics.csv");
+
+        CollectorAListPool.toScreen();
+        CollectorAListPool.toFile("AListPool_Metrics.csv");
+
+        
+
+        
 
 
     }
 
-    public static void runExperiment(int size, List dataStructure, int k, MultiCounter counter){
+    public static void runExperiment(int size, List dataStructure, int k, MultiCounter counter, TestDataCollector collector){
+
 
         counter.resetAllCounters();
         long totalSearchTime = 0;
@@ -131,7 +213,7 @@ public class Main {
         int[] randomNumbersInsertion2 = produceRandomNumbers(size, k);
         counter.resetCounter(INSERT_OPERATIONS);
 
-        for (int number : randomNumbersInsertion1) {
+        for (int number : randomNumbersInsertion2) {
             long startTimeInsertion2 = System.nanoTime();
             dataStructure.insert(k, String.valueOf(number));
             long endTimeInsertion2 = System.nanoTime();
@@ -141,6 +223,28 @@ public class Main {
 
         double averageInsertion2Time = (double) totalInsertion2Time / k;
         double averageInsertion2Count = (double) counter.getCount(INSERT_OPERATIONS) / k; 
+
+        ArrayList<Object> resultDataRow = new ArrayList<>();
+
+        resultDataRow.addAll(
+            Arrays.asList(
+                    size,
+                    
+                    averageSearchCount,
+                    averageInsertion1Count,
+                    averageDeletionCount,
+                    averageInsertion2Count,
+                    
+                    averageSearchTime,
+                    averageInsertion1Time,
+                    averageDeletionTime,
+                    averageInsertion2Time
+                
+            )
+        );
+        collector.addRow(resultDataRow);
+        
+
         
 
 
@@ -186,5 +290,9 @@ public class Main {
         // Return the first k keys
         return Arrays.copyOfRange(allKeys, 0, k);
     }
+
+
+
+
 
 }

@@ -20,9 +20,9 @@ public class AListPool implements List {
     public void setCounter(MultiCounter counter) {
         this.counter = counter;
         // Also set counter for the pool if available
-        if (pool != null) {
+        
             pool.setCounter(counter);
-        }
+        
     }
     
     @Override
@@ -34,7 +34,7 @@ public class AListPool implements List {
                 counter.increaseCounter(1);
             }
             
-            System.out.println("Array is full, can not add element");
+            //System.out.println("Array is full, can not add element");
             return false;
         }
         else{
@@ -141,7 +141,7 @@ public class AListPool implements List {
                 counter.increaseCounter(2);
             }
             
-            System.out.println("Target key is not in the AList");
+            ///System.out.println("Target key is not in the AList");
             return false;
         }
         else{
@@ -196,7 +196,7 @@ public class AListPool implements List {
                 counter.increaseCounter(0);
             }
             
-            System.out.println("Target key is not in the AList");
+            //System.out.println("Target key is not in the AListPool");
             return null;
         }
         else{

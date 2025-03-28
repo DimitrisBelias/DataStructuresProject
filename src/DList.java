@@ -10,11 +10,13 @@ public class DList implements List {
     private Node head;
     private Node tail;
     private MultiCounter counter;
+    private int elementCount;
 
     public DList() {
         this.head = null;
         this.tail = null;
         this.counter = null;
+        this.elementCount=0;
     }
     
     public void setCounter(MultiCounter counter) {
@@ -34,6 +36,7 @@ public class DList implements List {
         if (head == null) {
             head = node;
             tail = node;
+            elementCount++;
             
             if (counter != null) {
                 counter.increaseCounter(1); // Count assignment operation
@@ -47,6 +50,8 @@ public class DList implements List {
             
             tail.setNext(node);
             tail = node;
+            elementCount++;
+
             
             // Count assignment operations
             if (counter != null) {
@@ -72,7 +77,7 @@ public class DList implements List {
             }
             
             head = head.getNext();   // Garbage Collector will delete the head since there is no reference
-            
+            elementCount--;
             // Count assignment operation
             if (counter != null) {
                 counter.increaseCounter(1);
@@ -105,7 +110,7 @@ public class DList implements List {
                     }
                     
                     currentNode.setNext(currentNode.getNext().getNext());  // Since there is no previous node variable we use getNext().getNext()
-                    
+                    elementCount--;
                     // Count assignment operation
                     if (counter != null) {
                         counter.increaseCounter(1);

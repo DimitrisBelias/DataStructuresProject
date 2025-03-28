@@ -23,61 +23,39 @@ public class AList implements List{
     public boolean insert(int key, String data) {
         
         if(capacity == tail){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
             
+            counter.increaseCounter(1);
             System.out.println("Array is full, can not add element");
+
             return false;
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
+            counter.increaseCounter(1);  
             
             Element element = new ElementData(key, data);
-            
-            // Count element creation
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
+            counter.increaseCounter(1);
 
             for (int i = 0; i < tail; i++) {
-                // Count loop comparison
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+
+                counter.increaseCounter(1);
                 
                 if(dataArray[i].getkey() > key){
-                    // Count key comparison
-                    if (counter != null) {
-                        counter.increaseCounter(1);
-                    }
-                    
+                        
+                    counter.increaseCounter(1);
+
                     for (int j = tail; j > i; j--) {
-                        // Count loop comparison
-                        if (counter != null) {
-                            counter.increaseCounter(1);
-                        }
+
+                        counter.increaseCounter(1);
                         
                         dataArray[j] = dataArray[j-1];
-                        
-                        // Count assignment
-                        if (counter != null) {
-                            counter.increaseCounter(1);
-                        }
+                        counter.increaseCounter(1);
+
                     }
                     
                     dataArray[i] = element;
                     tail++;
-                    
-                    // Count assignments
-                    if (counter != null) {
-                        counter.increaseCounter(1, 2);
-                    }
-                    
+                    counter.increaseCounter(1, 2);
+
                     return true;
                 }
                 // Count failed comparison
@@ -110,7 +88,7 @@ public class AList implements List{
                 counter.increaseCounter(2);
             }
             
-            System.out.println("Target key is not in the AList");
+            //System.out.println("Target key is not in the AList");
             return false;
         }
         else{
@@ -149,7 +127,7 @@ public class AList implements List{
     public Element search(int key) {
         int result = BinarySearch(key);
         
-        // Count binary search - Note: BinarySearch already counts operations
+        
 
         if(result == -1){
             // Count comparison
@@ -157,7 +135,7 @@ public class AList implements List{
                 counter.increaseCounter(0);
             }
             
-            System.out.println("Target key is not in the AList");
+            System.out.println("Binary Search Failed");
             return null;
         }
         else{
@@ -165,7 +143,7 @@ public class AList implements List{
             if (counter != null) {
                 counter.increaseCounter(0);
             }
-            
+            System.out.println("Binary search succeeded");
             return dataArray[result];
         }
     }
