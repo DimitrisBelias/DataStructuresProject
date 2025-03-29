@@ -20,12 +20,19 @@ public class AList implements List{
     }
 
     @Override
+    public MultiCounter getCounter(){
+        return this.counter;
+    }
+
+
+
+    @Override
     public boolean insert(int key, String data) {
         
         if(capacity == tail){
             
             counter.increaseCounter(1);
-            System.out.println("Array is full, can not add element");
+            System.out.println("Error: Array is full, can not add element in AList");
 
             return false;
         }
@@ -58,19 +65,12 @@ public class AList implements List{
 
                     return true;
                 }
-                // Count failed comparison
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+
             }
 
             dataArray[tail] = element;
             tail++;
-            
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(1, 2);
-            }
+            counter.increaseCounter(1, 2);
             
             return true;
         }
@@ -79,70 +79,45 @@ public class AList implements List{
     @Override
     public boolean delete(int key) {
         int result = BinarySearch(key);
+        counter.increaseCounter(2);
         
-        // Count binary search - Note: BinarySearch already counts operations
-
         if(result == -1){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(2);
-            }
-            
-            //System.out.println("Target key is not in the AList");
+            counter.increaseCounter(2);
+            System.out.println("Target key is not in the AList. Can not delete it");
             return false;
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(2);
-            }
-            
+
             for (int i = result; i < tail - 1; i++) {
-                // Count loop comparison
-                if (counter != null) {
-                    counter.increaseCounter(2);
-                }
-                
+                counter.increaseCounter(2);
                 dataArray[i] = dataArray[i+1];
-                
-                // Count assignment
-                if (counter != null) {
-                    counter.increaseCounter(2);
-                }
+                counter.increaseCounter(2);
             }
 
             dataArray[tail - 1] = null;
             tail--;
-            
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(2, 2);
-            }
-            
+
+            counter.increaseCounter(2,2);
+
             return true;
         }
     }
 
+
     @Override
     public Element search(int key) {
+        
         int result = BinarySearch(key);
         
-        
-
+    
         if(result == -1){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
             
             System.out.println("Binary Search Failed");
             return null;
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
             System.out.println("Binary search succeeded");
             return dataArray[result];
         }
@@ -152,63 +127,38 @@ public class AList implements List{
         int high = tail - 1;
         int low = 0;
         
-        // Count assignments
-        if (counter != null) {
-            counter.increaseCounter(0, 2);
-        }
+        counter.increaseCounter(1, 2);
 
         while(low <= high){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+            counter.increaseCounter(0);
 
             int mid = low + (high - low)/2;
-            
-            // Count calculation and assignment
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+            counter.increaseCounter(0);         
+    
 
             if(dataArray[mid].getkey()==key){
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
-                
+ 
+                counter.increaseCounter(0);        
                 return mid;
+
             }
             
-            // Count failed comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
 
             if(dataArray[mid].getkey() > key){
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+                counter.increaseCounter(0);
                 
                 high = mid - 1;
+                counter.increaseCounter(0);
                 
-                // Count assignment
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
             }
             else{
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
-                
+
                 low = mid + 1;
+                counter.increaseCounter(0);
                 
-                // Count assignment
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
             }
         }
 

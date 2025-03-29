@@ -28,6 +28,11 @@ public class DListPool implements List {
     }
 
     @Override
+    public MultiCounter getCounter(){
+        return this.counter;
+    }
+
+    @Override
     public boolean insert(int key, String data){
         if(pool.hasFreeObject()){
     

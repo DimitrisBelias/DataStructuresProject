@@ -24,105 +24,71 @@ public class AListPool implements List {
             pool.setCounter(counter);
         
     }
+
+    @Override
+    public MultiCounter getCounter(){
+        return this.counter;
+    }
     
     @Override
     public boolean insert(int key, String data) {
         
         if(capacity == tail){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
+
             
-            //System.out.println("Array is full, can not add element");
+            System.out.println("Error: Array is full, can not add element in AListPool");
             return false;
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
+
             
             Element element;
             if(!pool.hasFreeObject()){
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+  
                 
                 element = new ElementData(key, data);
                 
-                // Count element creation
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+   
             }
             else{
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+
                 
                 element = pool.getObject();
                 key = element.getkey();
                 
-                // Count assignments
-                if (counter != null) {
-                    counter.increaseCounter(1, 2);
-                }
+
             }    
 
             for (int i = 0; i < tail; i++) {
-                // Count loop comparison
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+ 
                 
                 if(dataArray[i].getkey() > key){
-                    // Count key comparison
-                    if (counter != null) {
-                        counter.increaseCounter(1);
-                    }
+
                     
                     for (int j = tail; j > i; j--) {
-                        // Count loop comparison
-                        if (counter != null) {
-                            counter.increaseCounter(1);
-                        }
+
                         
                         dataArray[j] = dataArray[j-1];
                         
-                        // Count assignment
-                        if (counter != null) {
-                            counter.increaseCounter(1);
-                        }
+
                     }
                     
 
                     dataArray[i] = element;
                     tail++;
                     
-                    // Count assignments
-                    if (counter != null) {
-                        counter.increaseCounter(1, 2);
-                    }
+
                     
                     return true;
                 }
                 
-                // Count failed comparison
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+
             }
 
             dataArray[tail] = element;
             tail++;
             
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(1, 2);
-            }
+
             
             return true;
         }
@@ -136,48 +102,30 @@ public class AListPool implements List {
         // Count binary search - Note: BinarySearch already counts operations
 
         if(result == -1){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(2);
-            }
+
             
             ///System.out.println("Target key is not in the AList");
             return false;
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(2);
-            }
+
 
             pool.addObject(dataArray[result]);
             
-            // Count pool operation
-            if (counter != null) {
-                counter.increaseCounter(2);
-            }
+
             
             for (int i = result; i < tail - 1; i++) {
-                // Count loop comparison
-                if (counter != null) {
-                    counter.increaseCounter(2);
-                }
+
                 
                 dataArray[i] = dataArray[i+1];
                 
-                // Count assignment
-                if (counter != null) {
-                    counter.increaseCounter(2);
-                }
+
             }
 
             dataArray[tail - 1] = null;
             tail--;
             
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(2, 2);
-            }
+
             
             return true;
         }
@@ -191,19 +139,13 @@ public class AListPool implements List {
         // Count binary search - Note: BinarySearch already counts operations
 
         if(result == -1){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
             
             //System.out.println("Target key is not in the AListPool");
             return null;
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
             
             return dataArray[result];
         }
@@ -213,63 +155,36 @@ public class AListPool implements List {
         int high = tail - 1;
         int low = 0;
         
-        // Count assignments
-        if (counter != null) {
-            counter.increaseCounter(0, 2);
-        }
+
 
         while(low <= high){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
 
             int mid = low + (high - low)/2;
             
-            // Count calculation and assignment
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
 
             if(dataArray[mid].getkey()==key){
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
                 
                 return mid;
             }
             
-            // Count failed comparison
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
 
             if(dataArray[mid].getkey() > key){
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
                 
                 high = mid - 1;
                 
-                // Count assignment
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
             }
             else{
-                // Count comparison
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
                 
                 low = mid + 1;
                 
-                // Count assignment
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
+
             }
         }
 

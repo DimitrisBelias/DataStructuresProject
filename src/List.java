@@ -35,4 +35,7 @@ public interface List {
      * Sets the counter for operation tracking
      */
     public void setCounter(MultiCounter counter);
+
+    public MultiCounter getCounter();
+
 }

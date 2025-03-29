@@ -23,157 +23,132 @@ public class DList implements List {
         this.counter = counter;
     }
 
+    @Override
+    public MultiCounter getCounter(){
+        return this.counter;
+    }
+
+    @Override
     public boolean insert(int key, String data) {
         
         ElementData element = new ElementData(key, data);
         Node node = new Node(element);
 
-        // Count operations if counter is set
-        if (counter != null) {
-            counter.increaseCounter(1); // Count element creation as an operation
-        }
+        counter.increaseCounter(1, 2);
 
         if (head == null) {
+            counter.increaseCounter(1);
+            
             head = node;
             tail = node;
             elementCount++;
             
-            if (counter != null) {
-                counter.increaseCounter(1); // Count assignment operation
-            }
+            counter.increaseCounter(1, 3);
         }
         else {
-            // Count comparison operation
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
+
             
             tail.setNext(node);
             tail = node;
             elementCount++;
 
-            
-            // Count assignment operations
-            if (counter != null) {
-                counter.increaseCounter(1, 2); // 2 assignments
-            }
+            counter.increaseCounter(1, 3);
+
         }
         return true;
     }
 
+    
+    
+    @Override
     public boolean delete(int key) {
-        if (counter != null) {
-            counter.increaseCounter(2); // Initial comparison operation
-        }
+
 
         if (head == null) {
+            counter.increaseCounter(2);
             return false;
         }
         
         if (head.getElement().getkey() == key) {
-            // Count comparison operation
-            if (counter != null) {
-                counter.increaseCounter(2); // Key comparison + null check
-            }
+            counter.increaseCounter(2);
+
             
             head = head.getNext();   // Garbage Collector will delete the head since there is no reference
             elementCount--;
-            // Count assignment operation
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
-            
+
+            counter.increaseCounter(2,2);
+
             return true;
         } else {
-            // Count comparison operation
-            if (counter != null) {
-                counter.increaseCounter(2);
-            }
+
            
             Node currentNode = head;
             
-            // Count assignment operation
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
+            counter.increaseCounter(2);
+
             
             while (currentNode.getNext() != null) {
-                // Count comparison operation
-                if (counter != null) {
-                    counter.increaseCounter(2); // null check + loop iteration
-                }
+                counter.increaseCounter(2);
+
 
                 if (currentNode.getNext().getElement().getkey() == key) {
-                    // Count comparison operation
-                    if (counter != null) {
-                        counter.increaseCounter(2);
-                    }
+                    counter.increaseCounter(2);
+
                     
                     currentNode.setNext(currentNode.getNext().getNext());  // Since there is no previous node variable we use getNext().getNext()
                     elementCount--;
                     // Count assignment operation
-                    if (counter != null) {
-                        counter.increaseCounter(1);
-                    }
+                    counter.increaseCounter(2,2);
+
                     
                     return true;
                 }
                 
                 currentNode = currentNode.getNext();
-                
-                // Count assignment operation
-                if (counter != null) {
-                    counter.increaseCounter(1);
-                }
+                counter.increaseCounter(2);
+
+
             }
         }
 
         return false;
     }
     
+
+
+
+    
+    @Override
     public Element search(int key) {
         if (head == null) {
+            
+            counter.increaseCounter(0);
             return null;
+            
         }
         
-        // Count comparison operation
-        if (counter != null) {
-            counter.increaseCounter(0);
-        }
+
         
         Node currentNode = head;
-        
-        // Count assignment operation
-        if (counter != null) {
-            counter.increaseCounter(0);
-        }
+        counter.increaseCounter(0);
+
+
         
         while (currentNode != null) {  // Changed condition to be more straightforward
-            // Count comparison operation for loop condition
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+            counter.increaseCounter(0);
+
             
             if (currentNode.getElement().getkey() == key) {
-                // Count comparison operation
-                if (counter != null) {
-                    counter.increaseCounter(0);
-                }
                 
+                counter.increaseCounter(0);
                 return currentNode.getElement();
             }
             
-            // Count comparison operation
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
-            
+
+            counter.increaseCounter(0);
             currentNode = currentNode.getNext();
             
-            // Count assignment operation
-            if (counter != null) {
-                counter.increaseCounter(0);
-            }
+
         }
         
         return null;
