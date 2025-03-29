@@ -19,78 +19,53 @@ public class LinkedListPool implements ObjectPool<Element> {
     }
 
     @Override
-    public void addObject(Element element){ 
+    public void addObject(Element element){         /// Updating index 2 (delete) 
         
         Node node = new Node(element);
-        
-        // Count node creation
-        if (counter != null) {
-            counter.increaseCounter(1);
-        }
-        
+        counter.increaseCounter(2);
+
+  
         if(head == null){
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
-            
+            counter.increaseCounter(2);
+
             head = node;
             tail = node;
-            
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(1, 2);
-            }
+            counter.increaseCounter(2,2);
+
         }
         else{
-            // Count comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
-            
+ 
             tail.setNext(node);
             tail = node;
-            
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(1, 2);
-            }
+            counter.increaseCounter(2);
+    
         }
     }
 
     @Override
     public boolean hasFreeObject(){
-        // Count comparison
-        if (counter != null) {
-            counter.increaseCounter(1);
-        }
-        
+
         return head!=null;
     }
 
     @Override
-    public Element getObject(){
+    public Element getObject(){    /// Updating index 1 (insertion)
         Node returnNode = head;
-        
-        // Count assignment
-        if (counter != null) {
-            counter.increaseCounter(1);
-        }
+        counter.increaseCounter(1);
+
         
         if(hasFreeObject()){
-            // Count comparison via hasFreeObject method
-            
+            counter.increaseCounter(1);
+
+
+          
             head = head.getNext();
-            
-            // Count assignment
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
-            
+            counter.increaseCounter(1);
+
+
             return returnNode.getElement();
         }
         else{
-            // Count failed comparison via hasFreeObject method
             
             return null;
         }
@@ -102,24 +77,12 @@ public class LinkedListPool implements ObjectPool<Element> {
         Node currentNode = head;
         int count = 0;
         
-        // Count assignments
-        if (counter != null) {
-            counter.increaseCounter(1, 2);
-        }
 
         while(currentNode != null) {
-            // Count loop comparison
-            if (counter != null) {
-                counter.increaseCounter(1);
-            }
-            
+
             count++;
             currentNode = currentNode.getNext();
-            
-            // Count assignments
-            if (counter != null) {
-                counter.increaseCounter(1, 2);
-            }
+
         }
         
         return count;

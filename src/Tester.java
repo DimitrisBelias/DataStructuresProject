@@ -115,11 +115,115 @@ public class Tester {
 
 
 
+        //Expiraments for DListsPool----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        System.out.println("\n-------------------------------------------------------------------");
+        System.out.println("Running Expirement for DListPool.....\n");
+        TestDataCollector DListPoolCollector = new TestDataCollector(
+                Arrays.asList(
+                        "Size",
+                            "Α μ.ο πράξεων ανά αναζήτηση",
+                            "Β μ.ο πράξεων ανά εισαγωγή 1",
+                            "C μ.ο πράξεων ανά διαγραφή",
+                            "D μ.ο πράξεων ανά εισαγωγή 2",
+                            "A μ.ο χρόνου ανά αναζήτηση",
+                            "B μ.ο χρόνου ανά εισαγωγή 1",
+                            "C μ.ο χρόνου ανά διαγραφή",
+                            "D μ.ο χρόνου ανά εισαγωγή 2"
+
+                    
+                )
+        );
+
+        for (int size : sizes) {
+
+            LinkedListPool currentPool = new LinkedListPool();
+            DListPool currentList = new DListPool(currentPool);
+            MultiCounter currentCounter = new MultiCounter(4);
+            currentList.setCounter(currentCounter);
+
+            populate_Structure(currentList, size);
+
+            int k;
+            if(size < 201){
+                k = 10;
+            }
+            else if(size > 200 && size < 1001){
+                k = 50;
+            }
+            else{
+                k = 100;
+            }
+
+            runExpirament(size, currentList, k, DListPoolCollector);
+
+        }
+
+        System.out.println("\n\n\n");
+        DListCollector.toScreen();
+        DListCollector.toFile("DListPool.csv");
+
+
+
+
+        //Expiraments for ALists----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        System.out.println("\n-------------------------------------------------------------------");
+        System.out.println("Running Expirement for AListPool.....\n");
+        TestDataCollector AListPoolCollector = new TestDataCollector(
+                Arrays.asList(
+                        "Size",
+                            "Α μ.ο πράξεων ανά αναζήτηση",
+                            "Β μ.ο πράξεων ανά εισαγωγή 1",
+                            "C μ.ο πράξεων ανά διαγραφή",
+                            "D μ.ο πράξεων ανά εισαγωγή 2",
+                            "A μ.ο χρόνου ανά αναζήτηση",
+                            "B μ.ο χρόνου ανά εισαγωγή 1",
+                            "C μ.ο χρόνου ανά διαγραφή",
+                            "D μ.ο χρόνου ανά εισαγωγή 2"
+
+                    
+                )
+        );
+
+        for (int size : sizes) {
+            
+            LinkedListPool AListPool = new LinkedListPool();
+            AListPool currentList = new AListPool(size+200, AListPool);
+            MultiCounter currentCounter = new MultiCounter(4);
+            currentList.setCounter(currentCounter);
+
+            populate_Structure(currentList, size);
+
+            int k;
+            if(size < 201){
+                k = 10;
+            }
+            else if(size > 200 && size < 1001){
+                k = 50;
+            }
+            else{
+                k = 100;
+            }
+
+            runExpirament(size, currentList, k, AListPoolCollector);
+
+        }
+
+        System.out.println("\n\n\n");
+        AListCollector.toScreen();
+        AListCollector.toFile("AListPool.csv");
+
+
+
+
+
 
 
     }
 
-    
+
+
     
     
     public static void populate_Structure(List structure, int size){
@@ -137,7 +241,9 @@ public class Tester {
     public static void runExpirament(int size, List structure, int k, TestDataCollector collector){
         System.out.println("Running Expirement for size: " + size);
 ////----------------------------------------------------------------------------------------------------------------------------------------------------////
-        /// Search - Operation
+        /// Search - Operation 
+
+
         long startTimeSearch = 0;
         long endTimeSearch = 0;
         long totalTimeSearch = 0;
@@ -158,6 +264,8 @@ public class Tester {
 
 ////-----------------------------------------------------------------------------------------------------------------------------------------------////
         /// Insert1 - Operation
+
+
         long startTimeInsertion1 = 0;
         long endTimeInsertion1 = 0;
         long totalTimeInsertion1 = 0;
@@ -180,6 +288,8 @@ public class Tester {
 
 ////--------------------------------------------------------------------------------------------------------------------------------------------------///
         /// Delete - Operation
+
+
         long startTimeDelete = 0;
         long endTimeDelete = 0;
         long totalTimeDelete = 0;
@@ -210,7 +320,9 @@ public class Tester {
         System.out.println("sdfg");
 
 ////----------------------------------------------------------------------------------------------------------------------------------------------------///
-        /// Insertion2 - Operation        
+        /// Insertion2 - Operation   
+
+        
         long startTimeInsertion2 = 0;
         long endTimeInsertion2 = 0;
         long totalInsertion2Time = 0;
